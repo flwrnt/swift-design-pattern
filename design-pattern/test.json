@@ -1,18 +1,8 @@
- [
- 	{
-		"title": "Rui Peres",
-		"body": "MailOnline"
-  	}, {
-		"title": "Tiago Almeida",
-		"body": "Thing Pink"
-  	}, {
-		"title": "David Rodrigues",
-		"body": "WIT-Software"
-  	}, {
-		"title": "Renato Rodrigues",
-		"body": "PixelMatters"
-  	}, {
-		"title": "Hugo Ferreira",
-		"body": "Equal Experts"
-	}
-]
+{"notifications":
+    [
+        {"id":"1","title":"Hello world !","body":"Ceci est la premi\u00e8re notification d'une longue s\u00e9rie ! Attendez vous \u00e0 p\u00e9ter un cable :).","thumbnail":"news","image":"goat","send_date":"2016-04-20 00:00:00","receive_date":"","read_date":""},
+        {"id":"2","title":"Un titre de test","body":"blabla une description pas trop longue","thumbnail":"news","image":"plane","send_date":"2016-07-13 00:00:00","receive_date":"","read_date":""},
+        {"id":"3","title":"Un titre un peu plus long pour voir.","body":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.","thumbnail":"news","image":"plane","send_date":"2016-07-01 00:00:00","receive_date":"","read_date":""},
+        {"id":"4","title":"Un titre qui devrait faire au moins deux lignes si je pousse un peut ma phrase !","body":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum","thumbnail":"news","image":"","send_date":"2016-08-30 00:00:00","receive_date":"","read_date":""}
+    ]
+}

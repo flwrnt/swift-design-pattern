@@ -7,30 +7,32 @@
 //
 
 import Foundation
+import CoreData
 
-class NotificationTableViewModel: APIControllerProtocol {
-    var notifications: Array<Notification> = []
+class NotificationTableViewModel {
     
-    lazy var api: APIController = APIController(delegate: self)
-    
-    func didReceiveAPIResults(_ results: Any) {
-        guard let array = results as? Dictionary<String, Any> else { return }
-        guard let notifications = array["notifications"] as? Array<Dictionary<String, Any>> else { return }
-        
-        print(Log("\(notifications)").description)
-        
-        for notification in notifications {
-            let mapNotification = try! Notification.mapToModel(notification)
-            
-            switch mapNotification {
-            case .success(let n):
-                self.notifications.append(n)
-                print(Log("notifications : \(self.notifications)").description)
-            case .fail(Error.parser):
-                print(Log("\(mapNotification)").description)
-            default:
-                print(Log("\(mapNotification)").description)
+    func notificationsRequest(_ completion: @escaping (Result<[Notifications]>) -> Void) {
+        Request.send(url: "http://flwrnt.local/ios/getNotifications.php") { data, response in
+            print(Log("http response: \(response)"))
+            print(Log("data result: \(data)"))
+
+            Parser.parse(data.value!) { (result: Result<[Notification]>) -> Void in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let n):
+                        Notification.save(n)
+                        completion(.success(Notification.fetchAll()))
+                    case .fail(let error):
+                        print(Log("error: \(error)"))
+                    }
+                }
             }
         }
     }
+    
+    func getNotifications() -> [Notifications] {
+        return Notification.fetchAll()
+    }
 }
+
+

@@ -8,7 +8,21 @@
 
 import UIKit
 
+class CustomTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var titleCellLabel: UILabel!
+    @IBOutlet weak var descCellLabel: UILabel!
+    @IBOutlet weak var imgCellImageView: UIImageView!
+    @IBOutlet weak var dateCellLabel: UILabel!
+}
+
 class NotificationTableViewController: UITableViewController {
+    lazy var viewModel: NotificationTableViewModel = NotificationTableViewModel()
+    var notifications = [Notifications]() {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +32,22 @@ class NotificationTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        viewModel.notificationsRequest() { notificationsResult in
+            switch notificationsResult {
+            case .success(let notifications):
+                self.notifications = notifications
+                print(Log("notifications: \(self.notifications)"))
+            case .fail(let error):
+                print(Log("error: \(error)"))
+            }
+        }
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -29,23 +58,27 @@ class NotificationTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return notifications.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! CustomTableViewCell
 
         // Configure the cell...
+        let notification = self.notifications[indexPath.row]
+        cell.titleCellLabel.text = notification.title!
+        cell.descCellLabel.text = notification.body!
+        cell.dateCellLabel.text = (notification.receive_date as! Date).beautiful()
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

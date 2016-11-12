@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+struct Log: CustomStringConvertible {
+    var body: String?
+    
+    public var description: String {
+        return "\n------------------------------------\n\(body!)\n------------------------------------"
+    }
+    
+    init(_ message: String? = nil) {
+        self.body = message
+    }
+}
