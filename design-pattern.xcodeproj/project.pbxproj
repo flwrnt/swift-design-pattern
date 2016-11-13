@@ -23,11 +23,13 @@
 		4260BFE61DD3975E00E75E67 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4260BFD91DD396F800E75E67 /* Alamofire.framework */; };
 		4260BFE81DD3979300E75E67 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4260BFD91DD396F800E75E67 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4299E8021DD72CE00094A508 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4299E8011DD72CE00094A508 /* Date.swift */; };
-		42A8D2301DD39C0F000477F7 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 42A8D22F1DD39C0F000477F7 /* test.json */; };
+		42A8D2301DD39C0F000477F7 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 42A8D22F1DD39C0F000477F7 /* notifications.json */; };
 		42A8D2331DD3B65D000477F7 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8D2321DD3B65D000477F7 /* FileManager.swift */; };
 		42A8D2351DD3B92C000477F7 /* NotificationTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8D2341DD3B92C000477F7 /* NotificationTableViewModel.swift */; };
 		42A8D2391DD3B983000477F7 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8D2381DD3B983000477F7 /* Log.swift */; };
 		42A8D23B1DD3BA6F000477F7 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8D23A1DD3BA6F000477F7 /* Const.swift */; };
+		42ECD06B1DD7C7EA0014EC6E /* getNotifications.php in Resources */ = {isa = PBXBuildFile; fileRef = 42ECD06A1DD7C7EA0014EC6E /* getNotifications.php */; };
+		42ECD06D1DD7C8550014EC6E /* notifications.sql in Resources */ = {isa = PBXBuildFile; fileRef = 42ECD06C1DD7C8550014EC6E /* notifications.sql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,11 +141,13 @@
 		4260BFC91DD3931600E75E67 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4260BFCD1DD396F800E75E67 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = SOURCE_ROOT; };
 		4299E8011DD72CE00094A508 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		42A8D22F1DD39C0F000477F7 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
+		42A8D22F1DD39C0F000477F7 /* notifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
 		42A8D2321DD3B65D000477F7 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		42A8D2341DD3B92C000477F7 /* NotificationTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewModel.swift; sourceTree = "<group>"; };
 		42A8D2381DD3B983000477F7 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		42A8D23A1DD3BA6F000477F7 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		42ECD06A1DD7C7EA0014EC6E /* getNotifications.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = getNotifications.php; sourceTree = "<group>"; };
+		42ECD06C1DD7C8550014EC6E /* notifications.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = notifications.sql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,13 +216,15 @@
 			isa = PBXGroup;
 			children = (
 				4260BF931DD3914F00E75E67 /* AppDelegate.swift */,
-				4205C5811DD51EDE00D69DD5 /* Network */,
-				4260BFCB1DD3933900E75E67 /* Models */,
-				4260BFC61DD392FA00E75E67 /* Components */,
 				4260BFCC1DD3935400E75E67 /* ViewControllers */,
 				4205C57E1DD498E700D69DD5 /* ViewModels */,
+				4260BFCB1DD3933900E75E67 /* Models */,
+				4205C5811DD51EDE00D69DD5 /* Network */,
+				4260BFC61DD392FA00E75E67 /* Components */,
+				42ECD06F1DD7D2930014EC6E /* Tools */,
 				42A8D2311DD3B643000477F7 /* Extensions */,
-				42A8D22F1DD39C0F000477F7 /* test.json */,
+				42A8D22F1DD39C0F000477F7 /* notifications.json */,
+				42ECD06E1DD7C85C0014EC6E /* server */,
 				4260BF971DD3914F00E75E67 /* Main.storyboard */,
 				4260BF9D1DD3914F00E75E67 /* Assets.xcassets */,
 				4260BF9F1DD3914F00E75E67 /* LaunchScreen.storyboard */,
@@ -252,9 +258,6 @@
 			children = (
 				4260BFC71DD3930A00E75E67 /* Error.swift */,
 				4260BFC91DD3931600E75E67 /* Result.swift */,
-				42A8D2381DD3B983000477F7 /* Log.swift */,
-				42A8D23A1DD3BA6F000477F7 /* Const.swift */,
-				4205C57F1DD511C600D69DD5 /* Parser.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -296,6 +299,25 @@
 				4299E8011DD72CE00094A508 /* Date.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		42ECD06E1DD7C85C0014EC6E /* server */ = {
+			isa = PBXGroup;
+			children = (
+				42ECD06A1DD7C7EA0014EC6E /* getNotifications.php */,
+				42ECD06C1DD7C8550014EC6E /* notifications.sql */,
+			);
+			name = server;
+			sourceTree = "<group>";
+		};
+		42ECD06F1DD7D2930014EC6E /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				42A8D2381DD3B983000477F7 /* Log.swift */,
+				42A8D23A1DD3BA6F000477F7 /* Const.swift */,
+				4205C57F1DD511C600D69DD5 /* Parser.swift */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,7 +491,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4260BFA11DD3914F00E75E67 /* LaunchScreen.storyboard in Resources */,
-				42A8D2301DD39C0F000477F7 /* test.json in Resources */,
+				42ECD06D1DD7C8550014EC6E /* notifications.sql in Resources */,
+				42A8D2301DD39C0F000477F7 /* notifications.json in Resources */,
+				42ECD06B1DD7C7EA0014EC6E /* getNotifications.php in Resources */,
 				4260BF9E1DD3914F00E75E67 /* Assets.xcassets in Resources */,
 				4260BF991DD3914F00E75E67 /* Main.storyboard in Resources */,
 			);

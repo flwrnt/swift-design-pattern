@@ -42,12 +42,7 @@ class NotificationTableViewController: UITableViewController {
                 print(Log("error: \(error)"))
             }
         }
-        
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-    }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
