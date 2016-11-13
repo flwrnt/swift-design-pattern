@@ -10,27 +10,25 @@ import Foundation
 
 
 extension FileManager {
-    class func getPath(file: String) -> URL? {
+    private class func getPath(_ file: String) -> URL? {
         if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
             return URL(fileURLWithPath: dir).appendingPathComponent(file)
         }
         return nil
     }
     
-    class func read(path: URL) throws -> String? {
+    class func read(fileName: String) throws -> String? {
+        guard let path: URL = self.getPath(fileName) else { throw Error.fileManager("file \(fileName) doesn't exist") }
+        
         let content = try NSString(contentsOf: path, encoding: String.Encoding.utf8.rawValue)
         
         return content as String
     }
     
-    class func write(content: String, path: URL) {
-        do {
-            try content.write(to: path, atomically: false, encoding: String.Encoding.utf8)
-        }
-        catch {
-            /* error handling here */
-            print("error writing new token to file: \(error)")
-        }
+    class func write(content: String, fileName: String) throws {
+        guard let path: URL = self.getPath(fileName) else { throw Error.fileManager("file \(fileName) doesn't exist") }
+
+        try content.write(to: path, atomically: false, encoding: String.Encoding.utf8)
     }
 }
 
