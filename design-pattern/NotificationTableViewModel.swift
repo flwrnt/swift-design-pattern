@@ -8,11 +8,31 @@
 
 import Foundation
 import CoreData
+import UIKit
+
 
 class NotificationTableViewModel {
+    let notificationsTableView: UITableView
+    var notifications = [Notifications]() {
+        didSet {
+            notificationsTableView.reloadData()
+        }
+    }
+    
+    init(tableView: UITableView) {
+        self.notificationsTableView = tableView
+        self.getNotifications()
+    }
+    
+    func countNotifications() -> Int {
+        return self.notifications.count
+    }
+    
+    func getNotification(at index: Int) -> Notifications {
+        return self.notifications[index]
+    }
     
     func notificationsRequest(_ completion: @escaping (Result<[Notifications]>) -> Void) {
-        var notifications = Notification.fetchAll()
         let parameters: Parameters = ["last_id": notifications.first?.id! ?? "0"]
         
         Request.send(url: "http://flwrnt.local/ios/getNotifications.php", params: parameters) { dataResult, response in
@@ -29,9 +49,9 @@ class NotificationTableViewModel {
                         case .success(let n):
                             if !n.isEmpty {
                                 Notification.save(n)
-                                notifications = Notification.fetchAll()
+                                self.getNotifications()
                             }
-                            completion(.success(notifications))
+                            completion(.success(self.notifications))
                         case .fail(let error):
                             print(Log("error: \(error)"))
                         }
@@ -44,8 +64,8 @@ class NotificationTableViewModel {
         }
     }
     
-    func getNotifications() -> [Notifications] {
-        return Notification.fetchAll()
+    private func getNotifications(){
+        self.notifications = Notification.fetchAll()
     }
 }
 

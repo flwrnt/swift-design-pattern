@@ -17,16 +17,11 @@ class CustomTableViewCell: UITableViewCell {
 }
 
 class NotificationTableViewController: UITableViewController {
-    lazy var viewModel: NotificationTableViewModel = NotificationTableViewModel()
-    var notifications = [Notifications]() {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
+    lazy var viewModel: NotificationTableViewModel = NotificationTableViewModel(tableView: self.tableView)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -36,8 +31,7 @@ class NotificationTableViewController: UITableViewController {
         viewModel.notificationsRequest() { notificationsResult in
             switch notificationsResult {
             case .success(let notifications):
-                self.notifications = notifications
-                print(Log("notifications: \(self.notifications)"))
+                print(Log("notifications: \(notifications)"))
             case .fail(let error):
                 print(Log("error: \(error)"))
             }
@@ -58,7 +52,7 @@ class NotificationTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return notifications.count
+        return viewModel.countNotifications()
     }
 
     
@@ -66,7 +60,7 @@ class NotificationTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! CustomTableViewCell
 
         // Configure the cell...
-        let notification = self.notifications[indexPath.row]
+        let notification = viewModel.getNotification(at: indexPath.row)
         cell.titleCellLabel.text = notification.title!
         cell.descCellLabel.text = notification.body!
         cell.dateCellLabel.text = (notification.receive_date as! Date).beautiful()
