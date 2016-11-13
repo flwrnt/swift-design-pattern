@@ -8,7 +8,19 @@
 
 import Foundation
 
-enum Error: Swift.Error {
+enum Error: Swift.Error, CustomStringConvertible {
     case network(String)
     case parser
+    case fileManager(String)
+    
+    public var description: String {
+        switch self {
+        case .network(let error):
+            return error
+        case .fileManager(let error):
+            return error
+        default:
+            return self.description
+        }
+    }
 }
