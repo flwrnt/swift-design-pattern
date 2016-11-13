@@ -36,41 +36,6 @@ final class Notification: Mappable, Equatable, CustomStringConvertible {
         moc = AppDelegate.getMoc()!
     }
     
-    func save() {
-        let entity = NSEntityDescription.insertNewObject(forEntityName: "Notifications", into: moc) as! Notifications
-        
-        entity.id = self.id
-        entity.title = self.title
-        entity.body = self.body
-        entity.receive_date = self.receiveDate as NSDate
-        
-        do {
-            try moc.save()
-            print(Log("notification saved"))
-        } catch {
-            fatalError(Log("save notification error: \(error)").description)
-        }
-    }
-    
-    class func save(_ notifications: [Notification]) {
-        for notification in notifications {
-            notification.save()
-        }
-    }
-    
-    class func fetchAll() -> [Notifications] {
-        let moc = AppDelegate.getMoc()!
-        let request: NSFetchRequest = NSFetchRequest<Notifications>(entityName: "Notifications")
-        
-        do {
-            return try moc.fetch(request).sorted {
-                $0.receive_date!.timeIntervalSince1970 > $1.receive_date!.timeIntervalSince1970
-            }
-        } catch {
-            fatalError(Log("fetch notifications error: \(error)").description)
-        }
-    }
-    
     // conform to mappable ptotocol
     internal static func mapToModel(_ o: Any) -> Result<Notification> {
         guard let notificationDic = o as? [String: AnyObject] else { return .fail(.parser) }
@@ -107,3 +72,41 @@ final class Notification: Mappable, Equatable, CustomStringConvertible {
     }
 }
 
+// MARK: - handle core data notifications
+
+extension Notification {
+    func save() {
+        let entity = NSEntityDescription.insertNewObject(forEntityName: "Notifications", into: moc) as! Notifications
+        
+        entity.id = self.getId()
+        entity.title = self.getTitle()
+        entity.body = self.getBody()
+        entity.receive_date = self.getReceiveDate() as NSDate
+        
+        do {
+            try moc.save()
+            print(Log("notification saved"))
+        } catch {
+            fatalError(Log("save notification error: \(error)").description)
+        }
+    }
+    
+    class func save(_ notifications: [Notification]) {
+        for notification in notifications {
+            notification.save()
+        }
+    }
+    
+    class func fetchAll() -> [Notifications] {
+        let moc = AppDelegate.getMoc()!
+        let request: NSFetchRequest = NSFetchRequest<Notifications>(entityName: "Notifications")
+        
+        do {
+            return try moc.fetch(request).sorted {
+                $0.receive_date!.timeIntervalSince1970 > $1.receive_date!.timeIntervalSince1970
+            }
+        } catch {
+            fatalError(Log("fetch notifications error: \(error)").description)
+        }
+    }
+}
