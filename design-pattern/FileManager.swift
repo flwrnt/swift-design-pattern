@@ -18,7 +18,7 @@ extension FileManager {
     }
     
     class func read(fileName: String) throws -> String? {
-        guard let path: URL = self.getPath(fileName) else { throw Error.fileManager("file \(fileName) doesn't exist") }
+        guard let path: URL = self.getPath(fileName) else { throw Error.fileManager("file \(fileName) does not exist") }
         
         let content = try NSString(contentsOf: path, encoding: String.Encoding.utf8.rawValue)
         
@@ -26,7 +26,7 @@ extension FileManager {
     }
     
     class func write(content: String, fileName: String) throws {
-        guard let path: URL = self.getPath(fileName) else { throw Error.fileManager("file \(fileName) doesn't exist") }
+        guard let path: URL = self.getPath(fileName) else { throw Error.fileManager("file \(fileName) does not exist") }
 
         try content.write(to: path, atomically: false, encoding: String.Encoding.utf8)
     }

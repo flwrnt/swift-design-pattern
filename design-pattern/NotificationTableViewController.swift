@@ -22,20 +22,15 @@ class NotificationTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.edgesForExtendedLayout = [];
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        viewModel.notificationsRequest() { notificationsResult in
-            switch notificationsResult {
-            case .success(let notifications):
-                print(Log("notifications: \(notifications)"))
-            case .fail(let error):
-                print(Log("error: \(error)"))
-            }
-        }
+        viewModel.notificationsRequest()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +47,7 @@ class NotificationTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return viewModel.countNotifications()
+        return viewModel.notificationsCount()
     }
 
     
@@ -104,14 +99,20 @@ class NotificationTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        guard segue.identifier == "notificationDetails" else { print(Log("wrong segue identifier")); return }
+        guard let detailsVewController = segue.destination as? NotificationViewController else { return }
+        
+        if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+            let notification = viewModel.getNotification(at: indexPath.row)
+            detailsVewController.viewModel.configure(notification: notification)
+        }
     }
-    */
-
+ 
 }

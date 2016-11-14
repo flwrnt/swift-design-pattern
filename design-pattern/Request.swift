@@ -31,7 +31,7 @@ struct Request {
         self.method = method
     }
     
-    func prepare(headers: HttpHeaders = [:], params: Parameters = [:]) -> URLRequest {
+    func createUrlRequest(headers: HttpHeaders = [:], params: Parameters = [:]) -> URLRequest {
         // build url & request
         let url = URL(string: path)
         var request = URLRequest(url: url!)
@@ -50,13 +50,23 @@ struct Request {
         return request
     }
     
-    static func send(url: String, method: Method = .POST, headers: HttpHeaders = [:], params: Parameters = [:], completion: @escaping (Result<Data>, URLResponse) -> Void) {
+    static func send(urlReq: URLRequest, completion: @escaping (Result<Data>, URLResponse?) -> Void) {
         let session = URLSession(configuration: URLSessionConfiguration.default)
-        let request = self.init(path: url, method: method)
-        let urlReq = request.prepare(headers: headers, params: params)
         
         session.dataTask(with: urlReq) { data, response, error in
-            guard error == nil else { completion(.fail(.network("error: \(error)")), response!); return }
+            guard error == nil else { completion(.fail(.network("error: \(error!)")), response); return }
+            
+            completion(.success(data!), response!)
+        }.resume()
+    }
+    
+    static func send(url: String, method: Method = .POST, headers: HttpHeaders = [:], params: Parameters = [:], completion: @escaping (Result<Data>, URLResponse?) -> Void) {
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        let request = self.init(path: url, method: method)
+        let urlRequest = request.createUrlRequest(headers: headers, params: params)
+        
+        session.dataTask(with: urlRequest) { data, response, error in
+            guard error == nil else { completion(.fail(.network("error: \(error!)")), response); return }
             
             completion(.success(data!), response!)
         }.resume()

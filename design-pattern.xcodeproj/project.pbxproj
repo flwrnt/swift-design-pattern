@@ -28,6 +28,8 @@
 		42A8D2351DD3B92C000477F7 /* NotificationTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8D2341DD3B92C000477F7 /* NotificationTableViewModel.swift */; };
 		42A8D2391DD3B983000477F7 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8D2381DD3B983000477F7 /* Log.swift */; };
 		42A8D23B1DD3BA6F000477F7 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8D23A1DD3BA6F000477F7 /* Const.swift */; };
+		42ECD0711DD908CB0014EC6E /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ECD0701DD908CB0014EC6E /* NotificationViewController.swift */; };
+		42ECD0731DD90D140014EC6E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ECD0721DD90D140014EC6E /* NotificationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +146,8 @@
 		42A8D2341DD3B92C000477F7 /* NotificationTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewModel.swift; sourceTree = "<group>"; };
 		42A8D2381DD3B983000477F7 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Log.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		42A8D23A1DD3BA6F000477F7 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		42ECD0701DD908CB0014EC6E /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		42ECD0721DD90D140014EC6E /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				42A8D2341DD3B92C000477F7 /* NotificationTableViewModel.swift */,
+				42ECD0721DD90D140014EC6E /* NotificationViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				4205C5751DD4608000D69DD5 /* NotificationTableViewController.swift */,
+				42ECD0701DD908CB0014EC6E /* NotificationViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -514,6 +520,8 @@
 				4260BF9C1DD3914F00E75E67 /* design_pattern.xcdatamodeld in Sources */,
 				4299E8021DD72CE00094A508 /* Date.swift in Sources */,
 				4260BFC81DD3930A00E75E67 /* Error.swift in Sources */,
+				42ECD0711DD908CB0014EC6E /* NotificationViewController.swift in Sources */,
+				42ECD0731DD90D140014EC6E /* NotificationViewModel.swift in Sources */,
 				4260BFC51DD3922400E75E67 /* Notification.swift in Sources */,
 				4205C5831DD51F0000D69DD5 /* Request.swift in Sources */,
 				42A8D23B1DD3BA6F000477F7 /* Const.swift in Sources */,

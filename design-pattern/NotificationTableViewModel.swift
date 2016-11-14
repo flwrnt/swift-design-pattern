@@ -24,7 +24,7 @@ class NotificationTableViewModel {
         self.getNotifications()
     }
     
-    func countNotifications() -> Int {
+    func notificationsCount() -> Int {
         return self.notifications.count
     }
     
@@ -32,14 +32,14 @@ class NotificationTableViewModel {
         return self.notifications[index]
     }
     
-    func notificationsRequest(_ completion: @escaping (Result<[Notifications]>) -> Void) {
+    func notificationsRequest(_ completion: ((Result<[Notifications]>) -> Void)? = nil) {
         let parameters: Parameters = ["last_id": notifications.first?.id! ?? "0"]
         
-        Request.send(url: "http://flwrnt.local/ios/getNotifications.php", params: parameters) { dataResult, response in
+        Request.send(url: "http://flwrt.local/ios/getNotifications.php", params: parameters) { dataResult, response in
             print(Log("http response: \(response)"))
             print(Log("data result: \(dataResult)"))
             
-            guard (response as! HTTPURLResponse).statusCode == 200 else { completion(.fail(.network("not a 200 response: \(response)"))); return }
+            guard (response as? HTTPURLResponse)?.statusCode == 200 else { completion?(.fail(.network("not a 200 response: \(response)"))); return }
             
             switch dataResult {
             case .success(let data):
@@ -51,14 +51,14 @@ class NotificationTableViewModel {
                                 Notification.save(n)
                                 self.getNotifications()
                             }
-                            completion(.success(self.notifications))
+                            completion?(.success(self.notifications))
                         case .fail(let error):
                             print(Log("error: \(error)"))
                         }
                     }
                 }
             case .fail(let error):
-                print(Log("error: \(error)"))
+                print(Log("\(error)"))
             }
             
         }
