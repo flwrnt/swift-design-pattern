@@ -12,60 +12,51 @@ import UIKit
 
 
 class NotificationTableViewModel {
-    let notificationsTableView: UITableView
-    var notifications = [Notifications]() {
-        didSet {
-            notificationsTableView.reloadData()
-        }
-    }
+    let notificationsCoreDataStore = NotificationCoreDataStoreService()
     
-    init(tableView: UITableView) {
-        self.notificationsTableView = tableView
-        self.getNotifications()
-    }
-    
-    func notificationsCount() -> Int {
-        return self.notifications.count
-    }
-    
-    func getNotification(at index: Int) -> Notifications {
-        return self.notifications[index]
-    }
-    
-    func notificationsRequest(_ completion: ((Result<[Notifications]>) -> Void)? = nil) {
-        let parameters: Parameters = [Const.Param.lastId: notifications.first?.id! ?? "0"]
+    func notificationsRequest(headers: HttpHeaders = [:], parameters: Parameters = [:], _ completion: ((Result<[Notifications]>) -> Void)? = nil) {
         
-        Request.send(url: Const.Url.getNotifications, params: parameters) { dataResult, response in
-            print(Log("http response: \(response)"))
-            print(Log("data result: \(dataResult)"))
-            
-            guard (response as? HTTPURLResponse)?.statusCode == 200 else { completion?(.fail(.network("not a 200 response: \(response)"))); return }
-            
+        Request.send(url: Const.Url.getNotifications, headers: headers, params: parameters) { dataResult, response in
             switch dataResult {
             case .success(let data):
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                    completion?(.fail(.network("not a 200 response: \(response)"))); return
+                }
+
                 Parser.parse(data) { (result: Result<[Notification]>) -> Void in
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let n):
+                            var notifications = [Notifications]()
                             if !n.isEmpty {
-                                Notification.save(n)
-                                self.getNotifications()
+                                self.notificationsCoreDataStore.saveNotifications(n)
+                                notifications = self.getNotifications()
                             }
-                            completion?(.success(self.notifications))
+                            completion?(.success(notifications))
                         case .fail(let error):
                             print(Log("error: \(error)"))
                         }
                     }
                 }
             case .fail(let error):
-                print(Log("\(error)"))
+                print(Log("error: \(error.localizedDescription)"))
             }
             
         }
     }
     
-    private func getNotifications(){
-        self.notifications = Notification.fetchAll()
+    func getNotifications() -> [Notifications] {
+        var notif = [Notifications]()
+        
+        notificationsCoreDataStore.fetchNotifications() { result in
+            switch result {
+            case .success(let notifications):
+                notif = notifications
+            case .fail(let error):
+                print(Log("error: \(error)"))
+            }
+        }
+        return notif
     }
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class NotificationCoreDataStore {
+class NotificationCoreDataStoreService {
     let moc: NSManagedObjectContext
     
     init() {

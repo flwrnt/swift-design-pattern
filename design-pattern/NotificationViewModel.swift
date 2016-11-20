@@ -9,14 +9,20 @@
 import Foundation
 
 class NotificationViewModel {
-    private var title: String = ""
-    private var body: String = ""
-    private var date: String = ""
+    var notification: Notifications?
+    
+    var title: String {
+        return notification!.title!
+    }
+    var body: String {
+        return notification!.body!
+    }
+    var date: String {
+        return formatDate(date: notification!.receive_date! as Date)
+    }
     
     func configure(notification: Notifications) {
-        self.title = notification.title!
-        self.body = notification.body!
-        self.date = formatDate(date: notification.receive_date as! Date)
+        self.notification = notification
     }
     
     private func formatDate(date: Date) -> String {
@@ -25,15 +31,4 @@ class NotificationViewModel {
         
         return "Envoyé le \(day) à \(time)"
     }
-    
-    func getTitle() -> String {
-        return self.title
-    }
-    func getBody() -> String {
-        return self.body
-    }
-    func getDate() -> String {
-        return self.date
-    }
-
 }

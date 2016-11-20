@@ -19,11 +19,9 @@ class NotificationViewController: UIViewController {
         super.viewDidLoad()
         bodyTextView.isEditable = false
         
-        titleLabel.text = viewModel.getTitle()
-        bodyTextView.text = viewModel.getBody()
-        dateLabel.text = viewModel.getDate()
-
-        // Do any additional setup after loading the view.
+        titleLabel.text = viewModel.title
+        bodyTextView.text = viewModel.body
+        dateLabel.text = viewModel.date
     }
 
     override func didReceiveMemoryWarning() {

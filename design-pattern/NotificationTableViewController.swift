@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomTableViewCell: UITableViewCell {
+class NotificationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var titleCellLabel: UILabel!
     @IBOutlet weak var descCellLabel: UILabel!
@@ -17,25 +17,33 @@ class CustomTableViewCell: UITableViewCell {
 }
 
 class NotificationTableViewController: UITableViewController {
-    lazy var viewModel: NotificationTableViewModel = NotificationTableViewModel(tableView: self.tableView)
-
+    lazy var viewModel: NotificationTableViewModel = NotificationTableViewModel()
+    
+    var notifications = [Notifications]() {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.edgesForExtendedLayout = [];
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.notifications = viewModel.getNotifications()
         
-        viewModel.notificationsRequest()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        let parameters: Parameters = [Const.Param.lastId: notifications.first?.id! ?? "0"]
+        viewModel.notificationsRequest(parameters: parameters) { result in
+            switch result {
+            case .success(let notifications):
+                self.notifications = notifications
+            case .fail(let error):
+                print(Log("error: \(error)"))
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -47,58 +55,21 @@ class NotificationTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return viewModel.notificationsCount()
+        return notifications.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! CustomTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! NotificationTableViewCell
 
         // Configure the cell...
-        let notification = viewModel.getNotification(at: indexPath.row)
+        let notification = notifications[indexPath.row]
         cell.titleCellLabel.text = notification.title!
         cell.descCellLabel.text = notification.body!
         cell.dateCellLabel.text = (notification.receive_date as! Date).beautiful()
 
         return cell
     }
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -110,7 +81,7 @@ class NotificationTableViewController: UITableViewController {
         guard let detailsVewController = segue.destination as? NotificationViewController else { return }
         
         if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-            let notification = viewModel.getNotification(at: indexPath.row)
+            let notification = notifications[indexPath.row]
             detailsVewController.viewModel.configure(notification: notification)
         }
     }
