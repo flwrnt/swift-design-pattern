@@ -33,9 +33,9 @@ class NotificationTableViewModel {
     }
     
     func notificationsRequest(_ completion: ((Result<[Notifications]>) -> Void)? = nil) {
-        let parameters: Parameters = ["last_id": notifications.first?.id! ?? "0"]
+        let parameters: Parameters = [Const.Param.lastId: notifications.first?.id! ?? "0"]
         
-        Request.send(url: "http://flwrt.local/ios/getNotifications.php", params: parameters) { dataResult, response in
+        Request.send(url: Const.Url.getNotifications, params: parameters) { dataResult, response in
             print(Log("http response: \(response)"))
             print(Log("data result: \(dataResult)"))
             
