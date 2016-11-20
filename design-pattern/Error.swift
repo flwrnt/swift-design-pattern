@@ -12,6 +12,7 @@ enum Error: Swift.Error, CustomStringConvertible {
     case network(String)
     case parser
     case fileManager(String)
+    case coreData(String)
     
     public var description: String {
         switch self {
